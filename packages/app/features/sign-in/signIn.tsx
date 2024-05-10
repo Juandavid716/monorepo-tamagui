@@ -1,22 +1,17 @@
 'use client';
-import { Button, Input, Form, XStack, YStack, H2, Label, Spinner } from 'tamagui';
+import { Button, Input, Form, XStack, YStack, H2, Label, Text } from 'tamagui';
 
 import Link from 'next/link';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { useToastController } from '@my/ui';
 
-const schema = yup.object().shape({
-  email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string().required('Password is required'),
-});
+import { schema } from 'app/shared/validation';
 
 export default function Signin() {
-  const { data: session } = useSession();
   const {
     control,
     handleSubmit,
@@ -28,7 +23,7 @@ export default function Signin() {
 
   const router = useRouter();
 
-  const onSubmit = async data => {
+  const onSubmit = async (data: {email: string, password: string}) => {
     const { email, password } = data;
 
     try {
@@ -46,7 +41,7 @@ export default function Signin() {
       }
     } catch (error) {
       console.error(error, 'error');
-      toast.show('Something went wrong', error);
+      toast.show('Something went wrong');
     }
   };
 
@@ -73,8 +68,8 @@ export default function Signin() {
                 name="email"
                 defaultValue=""
               />
-              {errors.email && <p>{errors.email.message}</p>}
             </XStack>
+            {errors.email && <Text color="red">{errors.email.message}</Text>}
             <Label htmlFor="password">Password</Label>
             <XStack alignItems="center" space="$2" mt={6} mb={6}>
               <Controller
@@ -93,17 +88,16 @@ export default function Signin() {
                 name="password"
                 defaultValue=""
               />
-
-              {errors.password && <p>{errors.password.message}</p>}
             </XStack>
-           
+            {errors.password && <Text color="red">{errors.password.message}</Text>}
+
             <Form.Trigger asChild>
               <Button size="$3" mt={10} bg={'#3F48CC'}>
                 Sign in
               </Button>
             </Form.Trigger>
 
-            <XStack alignItems="flex-end" space="$2" mt={30} mb={10} >
+            <XStack alignItems="flex-end" space="$2" mt={30} mb={10}>
               <Link href="/sign-up" passHref>
                 <span>Sign Up</span>
               </Link>

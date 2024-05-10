@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, Input, Form, XStack, YStack, H2, Label, Spinner } from 'tamagui';
+import { useToastController } from '@my/ui';
 
 import { auth } from 'app/auth/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -9,13 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { useToastController } from '@my/ui';
-
-const schema = yup.object().shape({
-  email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string().required('Password is required'),
-});
+import { schema } from 'app/shared/validation';
 
 export default function SignUp() {
 
