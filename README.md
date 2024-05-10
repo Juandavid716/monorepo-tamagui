@@ -1,14 +1,43 @@
-# Tamagui + Solito + Next + Expo Monorepo
+# Tamagui app
+
+
+## How to run?
+
+Steps:
+
+1. Clone this repository
+2. Setup dependencies with the next command (You have to use yarn as your package manager)
 
 ```sh
-npm create tamagui
+yarn install 
 ```
+
+3. Set the .env file located on ```apps/next``` route in the next way in order to initialize ```firebase``` and ```next-auth```.
+
+```sh
+IGNORE_TS_CONFIG_PATHS=true
+TAMAGUI_TARGET=web
+TAMAGUI_DISABLE_WARN_DYNAMIC_LOAD=1
+
+NEXTAUTH_URL=your_port #http://localhost:3000
+NEXTAUTH_SECRET=your_personal_key #You can create a random key with the commmand openssl rand -base64 32 or use any random string.
+
+NEXT_PUBLIC_REACT_APP_FIREBASE_API_KEY=YOUR_API_KEY
+NEXT_PUBLIC_REACT_APP_FIREBASE_AUTH_DOMAIN=YOUR_API_DOMAIN
+NEXT_PUBLIC_REACT_APP_FIREBASE_PROJECT_ID=YOUR_FIREBASE_PROJECT_ID
+NEXT_PUBLIC_REACT_APP_FIREBASE_STORAGE_BUCKET=YOUR_FIREBASE_STORAGE_BUCKET
+NEXT_PUBLIC_REACT_APP_FIREBASE_MESSAGING_SENDER_ID=YOUR_FIREBASE_SENDER_ID
+NEXT_PUBLIC_REACT_APP_FIREBASE_APP_ID=YOUR_FIREBASE_APP_ID
+NEXT_PUBLIC_REACT_APP_FIREBASE_MEASUREMENT_ID=YOUR_FIREBASE_MEASUREMENT_ID
+```
+
+4. Run the project with the command ```yarn web``` on the root.
+
+5. Start to navigate!
 
 ## 🔦 About
 
-This monorepo is a starter for an Expo + Next.js + Tamagui + Solito app.
-
-Many thanks to [@FernandoTheRojo](https://twitter.com/fernandotherojo) for the Solito starter monorepo which this was forked from. Check out his [talk about using expo + next together at Next.js Conf 2021](https://www.youtube.com/watch?v=0lnbdRweJtA).
+This monorepo is a starter for an Expo + Next.js + Tamagui + Solito app, created with ```npm create tamagui@latest```.
 
 ## 📦 Included packages
 
@@ -17,79 +46,38 @@ Many thanks to [@FernandoTheRojo](https://twitter.com/fernandotherojo) for the S
 - Expo SDK
 - Next.js
 - Expo Router
+- Next auth
+- Firebase
+
+## API Useds
+
 
 ## 🗂 Folder layout
 
 The main apps are:
 
-- `expo` (native)
 - `next` (web)
+  - `pages`
+      - `api` (contains next-auth configuration)
+      - `dashboard`
+      - `sign-in`
+      - `sign-up`
+
+  - `middleware` (used for protect routes)
 
 - `packages` shared packages across apps
-  - `ui` includes your custom UI kit that will be optimized by Tamagui
-  - `app` you'll be importing most files from `app/`
-    - `features` (don't use a `screens` folder. organize by feature.)
-    - `provider` (all the providers that wrap the app, and some no-ops for Web.)
+  - `app` 
+    - `auth` (firebase settings)
+    - `features` (Divided by each folder screen)
+        - `dashboard`
+        - `sign-in`
+        - `sign-up`
+        - `home`
+    - `provider` (all the providers such as the session provider)
 
-You can add other folders inside of `packages/` if you know what you're doing and have a good reason to.
 
-## 🏁 Start the app
+## Demo
 
-- Install dependencies: `yarn`
 
-- Next.js local dev: `yarn web`
 
-To run with optimizer on in dev mode (just for testing, it's faster to leave it off): `yarn web:extract`. To build for production `yarn web:prod`.
-
-To see debug output to verify the compiler, add `// debug` as a comment to the top of any file.
-
-- Expo local dev: `yarn native`
-
-## UI Kit
-
-Note we're following the [design systems guide](https://tamagui.dev/docs/guides/design-systems) and creating our own package for components.
-
-See `packages/ui` named `@my/ui` for how this works.
-
-## 🆕 Add new dependencies
-
-### Pure JS dependencies
-
-If you're installing a JavaScript-only dependency that will be used across platforms, install it in `packages/app`:
-
-```sh
-cd packages/app
-yarn add date-fns
-cd ../..
-yarn
-```
-
-### Native dependencies
-
-If you're installing a library with any native code, you must install it in `expo`:
-
-```sh
-cd apps/expo
-yarn add react-native-reanimated
-cd ..
-yarn
-```
-
-## Update new dependencies
-
-### Pure JS dependencies
-
-```sh
-yarn upgrade-interactive
-```
-
-You can also install the native library inside of `packages/app` if you want to get autoimport for that package inside of the `app` folder. However, you need to be careful and install the _exact_ same version in both packages. If the versions mismatch at all, you'll potentially get terrible bugs. This is a classic monorepo issue. I use `lerna-update-wizard` to help with this (you don't need to use Lerna to use that lib).
-
-You may potentially want to have the native module transpiled for the next app. If you get error messages with `Cannot use import statement outside a module`, you may need to use `transpilePackages` in your `next.config.js` and add the module to the array there.
-
-### Deploying to Vercel
-
-- Root: `apps/next`
-- Install command to be `yarn set version stable && yarn install`
-- Build command: leave default setting
-- Output dir: leave default setting
+### Screenshoots
