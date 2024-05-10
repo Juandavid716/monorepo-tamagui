@@ -11,6 +11,7 @@ import {
   YStack,
 } from '@my/ui'
 import { ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
+import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useLink } from 'solito/link'
 
