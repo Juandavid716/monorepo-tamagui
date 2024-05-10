@@ -68,6 +68,9 @@ The main apps are:
 - `packages` shared packages across apps
   - `app` 
     - `auth` (firebase settings)
+    - `components`
+       - `navbar`
+       - `pagination` 
     - `features` (Divided by each folder screen)
         - `dashboard`
         - `sign-in`
@@ -78,6 +81,18 @@ The main apps are:
 
 ## Demo
 
+![demo_final](https://github.com/Juandavid716/monorepo-tamagui/assets/42303342/e725ad2c-6c0b-42b6-8bc0-20ee91055de6)
+
+### Screenshots
+
+![image](https://github.com/Juandavid716/monorepo-tamagui/assets/42303342/98bacb19-4e11-416c-ae85-ba8b48e30ae5)
+
+![image](https://github.com/Juandavid716/monorepo-tamagui/assets/42303342/d70c6977-b37b-4b7f-95f3-75ae1ba70d9c)
+
+![image](https://github.com/Juandavid716/monorepo-tamagui/assets/42303342/e689d1ee-58c4-40b8-a1cf-aacae69e0359)
+
+![image](https://github.com/Juandavid716/monorepo-tamagui/assets/42303342/94fbc590-5c9e-48ab-97cb-124201294997)
 
 
-### Screenshoots
+
+
