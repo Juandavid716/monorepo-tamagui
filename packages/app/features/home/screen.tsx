@@ -6,6 +6,7 @@ import {
   Separator,
   Sheet,
   useToastController,
+  View,
   XStack,
   YStack,
 } from '@my/ui'
@@ -19,6 +20,7 @@ export function HomeScreen() {
   })
 
   return (
+   
     <YStack f={1} jc="center" ai="center" p="$4" gap="$4">
       <YStack gap="$4" bc="$background">
         <H1 ta="center">Welcome to Tamagui.</H1>
@@ -51,6 +53,7 @@ export function HomeScreen() {
 
       <SheetDemo />
     </YStack>
+  
   )
 }
 
