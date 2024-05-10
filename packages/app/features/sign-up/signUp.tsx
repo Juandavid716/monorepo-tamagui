@@ -1,11 +1,13 @@
 'use client';
+import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { Button, Input, Form, XStack, YStack, H2, Label, Spinner } from 'tamagui';
 
-import Link from 'next/link';
-import { signIn, useSession } from 'next-auth/react';
+import { auth } from 'app/auth/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
-import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useToastController } from '@my/ui';
@@ -15,8 +17,8 @@ const schema = yup.object().shape({
   password: yup.string().required('Password is required'),
 });
 
-export default function Signin() {
-  const { data: session } = useSession();
+export default function SignUp() {
+
   const {
     control,
     handleSubmit,
@@ -32,18 +34,10 @@ export default function Signin() {
     const { email, password } = data;
 
     try {
-      const login = await signIn('credentials', {
-        email,
-        password,
-        redirect: false,
-      });
+      await createUserWithEmailAndPassword(auth, email, password);
 
-      if (login?.ok) {
-        toast.show('Successfully logged in');
-        router.push('/dashboard');
-      } else {
-        toast.show('Invalid credentials. Please try again');
-      }
+      toast.show('Successfully sign up');
+      router.push('/sign-in');
     } catch (error) {
       console.error(error, 'error');
       toast.show('Something went wrong', error);
@@ -53,7 +47,7 @@ export default function Signin() {
   return (
     <>
       <YStack f={1} jc="center" ai="center" p="$4" gap="$4">
-        <H2>Sign in</H2>
+        <H2>Sign Up</H2>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <YStack width={350} minHeight={450} overflow="hidden" space="$2" margin="$3" padding="$2">
             <Label htmlFor="email">Email Address</Label>
@@ -96,14 +90,10 @@ export default function Signin() {
 
               {errors.password && <p>{errors.password.message}</p>}
             </XStack>
-            <XStack alignItems="flex-end" space="$2" mt={6} mb={10} >
-              <Link href="/sign-up" passHref>
-                <span>Sign Up</span>
-              </Link>
-            </XStack>
+          
             <Form.Trigger asChild>
               <Button size="$3" mt={10} bg={'#3F48CC'}>
-                Sign in
+                Sign up
               </Button>
             </Form.Trigger>
           </YStack>
