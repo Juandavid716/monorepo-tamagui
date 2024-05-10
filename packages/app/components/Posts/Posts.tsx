@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { PostCard } from './PostCard';
 
 import useSWR from 'swr';
-import { Separator, YStack } from '@my/ui';
-import { H1 } from '@my/ui';
+import { Separator, YStack, Spinner, H1 } from '@my/ui';
 import Pagination, { paginate } from '../Pagination';
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
@@ -26,13 +25,19 @@ export function Posts() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
- 
-  const onPageChange = (page) => {
+
+  const onPageChange = page => {
     setCurrentPage(page);
   };
 
   if (error) return <div>Failed to load</div>;
-  if (!posts || !comments) return <div>Loading...</div>;
+  if (!posts || !comments) {
+    return (
+      <YStack height={500} padding="$3" space="$4" alignItems="center" justifyContent='center'>
+        <Spinner size="large" color="$orange10" />
+      </YStack>
+    );
+  }
 
   // Count appearance of each comment per post.
   const postIdCounts = comments?.reduce((acc, comment) => {
@@ -50,17 +55,18 @@ export function Posts() {
   const paginatedPosts = paginate(postsWithCount, currentPage, pageSize);
 
   return (
-    <YStack alignSelf="center" mt={50} space={6}>
-      <H1>Posts</H1>
-      <Separator />
-      <PostCard posts={paginatedPosts} />
-      <Pagination
-       items={postsWithCount.length} // 100
-       currentPage={currentPage} // 1
-       pageSize={pageSize} // 10
-       onPageChange={onPageChange}
+    <YStack m={50}>
+      <YStack alignSelf="center" mt={50} space={6}>
+        <H1>Posts</H1>
+        <Separator />
+        <PostCard posts={paginatedPosts} />
+        <Pagination
+          items={postsWithCount.length} // 100
+          currentPage={currentPage} // 1
+          pageSize={pageSize} // 10
+          onPageChange={onPageChange}
         />
-
+      </YStack>
     </YStack>
   );
 }
