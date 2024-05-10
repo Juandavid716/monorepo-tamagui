@@ -57,12 +57,12 @@ export default function Signin() {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <YStack width={350} minHeight={450} overflow="hidden" space="$2" margin="$3" padding="$2">
             <Label htmlFor="email">Email Address</Label>
-            <XStack alignItems="center" space="$2" mt={6} mb={10}>
+            <XStack alignItems="center" space="$2" mt={6} mb={6}>
               <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
-                    size="$2"
+                    size="$3"
                     placeholder="Email"
                     onChangeText={onChange}
                     onBlur={onBlur}
@@ -76,12 +76,12 @@ export default function Signin() {
               {errors.email && <p>{errors.email.message}</p>}
             </XStack>
             <Label htmlFor="password">Password</Label>
-            <XStack alignItems="center" space="$2" mt={6} mb={10}>
+            <XStack alignItems="center" space="$2" mt={6} mb={6}>
               <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
-                    size="$2"
+                    size="$3"
                     placeholder="Password"
                     onChangeText={onChange}
                     onBlur={onBlur}
@@ -96,16 +96,18 @@ export default function Signin() {
 
               {errors.password && <p>{errors.password.message}</p>}
             </XStack>
-            <XStack alignItems="flex-end" space="$2" mt={6} mb={10} >
-              <Link href="/sign-up" passHref>
-                <span>Sign Up</span>
-              </Link>
-            </XStack>
+           
             <Form.Trigger asChild>
               <Button size="$3" mt={10} bg={'#3F48CC'}>
                 Sign in
               </Button>
             </Form.Trigger>
+
+            <XStack alignItems="flex-end" space="$2" mt={30} mb={10} >
+              <Link href="/sign-up" passHref>
+                <span>Sign Up</span>
+              </Link>
+            </XStack>
           </YStack>
         </Form>
       </YStack>
