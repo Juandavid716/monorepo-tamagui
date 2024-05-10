@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Button, Input, Form, XStack, YStack, H2, Label, Spinner } from 'tamagui';
+import { Button, Input, Form, XStack, YStack, H2, Label, Text } from 'tamagui';
 import { useToastController } from '@my/ui';
 
 import { auth } from 'app/auth/firebase';
@@ -13,7 +13,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from 'app/shared/validation';
 
 export default function SignUp() {
-
   const {
     control,
     handleSubmit,
@@ -62,8 +61,8 @@ export default function SignUp() {
                 name="email"
                 defaultValue=""
               />
-              {errors.email && <p>{errors.email.message}</p>}
             </XStack>
+            {errors.email && <Text color="red">{errors.email.message}</Text>}
             <Label htmlFor="password">Password</Label>
             <XStack alignItems="center" space="$2" mt={6} mb={6}>
               <Controller
@@ -82,10 +81,9 @@ export default function SignUp() {
                 name="password"
                 defaultValue=""
               />
-
-              {errors.password && <p>{errors.password.message}</p>}
             </XStack>
-          
+            {errors.password && <Text color="red">{errors.password.message}</Text>}
+
             <Form.Trigger asChild>
               <Button size="$3" mt={10} bg={'#3F48CC'}>
                 Sign up
