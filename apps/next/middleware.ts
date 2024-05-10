@@ -6,7 +6,10 @@ export default async function middleware(req: NextRequest, event: NextFetchEvent
   const token = await getToken({ req });
   const isAuthenticated = !!token;
 
-  if (req.nextUrl.pathname === '/' && !isAuthenticated) {
+  if (
+    (req.nextUrl.pathname === '/' && !isAuthenticated) ||
+    (req.nextUrl.pathname.startsWith('/sign-up') && !isAuthenticated)
+  ) {
     return fetch(req);
   }
 
@@ -15,6 +18,10 @@ export default async function middleware(req: NextRequest, event: NextFetchEvent
   }
 
   if (req.nextUrl.pathname.startsWith('/sign-in') && isAuthenticated) {
+    return NextResponse.redirect(new URL('/dashboard', req.url));
+  }
+
+  if (req.nextUrl.pathname.startsWith('/sign-up') && isAuthenticated) {
     return NextResponse.redirect(new URL('/dashboard', req.url));
   }
 
