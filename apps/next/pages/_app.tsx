@@ -4,7 +4,8 @@ import '@tamagui/font-inter/css/700.css'
 import 'raf/polyfill'
 
 import { NextThemeProvider, useRootTheme } from '@tamagui/next-theme'
-import { Provider } from 'app/provider'
+import { Provider } from 'app/provider';
+import { SessionProvider } from 'app/provider/SessionProvider';
 import Head from 'next/head'
 import React from 'react'
 import type { SolitoAppProps } from 'solito'
@@ -22,7 +23,9 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThemeProvider>
+        <SessionProvider>
         <Component {...pageProps} />
+        </SessionProvider>
       </ThemeProvider>
     </>
   )
