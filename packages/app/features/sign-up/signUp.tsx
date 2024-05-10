@@ -33,8 +33,7 @@ export default function SignUp() {
       toast.show('Successfully sign up');
       router.push('/sign-in');
     } catch (error) {
-      console.error(error, 'error');
-      toast.show('Something went wrong', error);
+      toast.show('Email already used');
     }
   };
 
