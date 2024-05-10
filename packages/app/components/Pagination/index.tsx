@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Button } from 'tamagui'
+
 import { styles } from './pagination.styles';
 
 interface PaginationProps {
@@ -22,10 +24,17 @@ function Pagination({ items, pageSize, currentPage, onPageChange }) {
     <div>
       <ul style={styles.pagination}>
         {pages.map(page => (
-          <li key={page} style={page === currentPage ? styles.pageItemActive : styles.pageItem}>
-            <a style={styles.pageLink} onClick={() => onPageChange(page)}>
-              {page}
-            </a>
+          <li key={page} >
+            <Button
+              size="$3"
+              onPress={() => {
+                onPageChange(page)
+              }}
+              style={page === currentPage ? styles.pageItemActive : styles.pageItem}
+            >
+               {page}
+            </Button>
+           
           </li>
         ))}
       </ul>
