@@ -1,20 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
+import { signOut, useSession } from "next-auth/react"
 
 import { Button, XStack, YStack } from '@my/ui';
-
 import { styles } from './Nav.styles';
 import { useLink } from 'solito/link';
 
 export function Nav() {
-  const isLoggedIn = true;
+  const { data: session } = useSession()
+
+  const isLoggedIn = !!session;
 
   const signInLink = useLink({
     href: '/sign-in',
-  });
-
-  const signOutLink = useLink({
-    href: '/sign-out',
   });
 
   return (
@@ -29,7 +27,7 @@ export function Nav() {
       <div style={styles.links}>
         {isLoggedIn ? (
           <XStack>
-            <Button {...signOutLink}>Sign out</Button>
+            <Button onPress={() => signOut({ callbackUrl: '/' })} >Sign out</Button>
           </XStack>
         ) : (
           <XStack>
